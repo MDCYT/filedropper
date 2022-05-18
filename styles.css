@@ -16,8 +16,9 @@ body {
 }
 
 #log {
-  white-space: pre;
-  line-height: 40px;
+  white-space: break-spaces;
+  line-height: 20px;
+  padding-bottom: 20pt;
 }
 
 #file_label {
@@ -54,6 +55,15 @@ a {color: #ff2424;}
   color: white;
 }
 
+.checkbox_label {
+  display: block;
+  text-align: center;
+  margin-bottom: 10px;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
 .highlight_red {
   background-repeat: no-repeat;
   background-size: 100% 0.8em;
@@ -72,9 +82,11 @@ a {color: #ff2424;}
 
 
 #footer {
-  position: absolute;
+  position: relative;
   left:50%;
-  bottom: 10px;
+  display: inline-block;
+  margin-bottom: 10px;
   transform: translate(-50%, 0%);
   font-size: 9pt;
+  background: #0F2027;
 }

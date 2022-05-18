@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>File dropper</title>
     <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" media="screen and (min-device-width: 800px)">
   </head>
   <body>
     <div id="content">
@@ -12,6 +12,7 @@
 
     <form enctype="multipart/form-data" action="upload.php" method="post" id="form">
       <input type="hidden" name="MAX_FILE_SIZE" value="5000000000" />
+      <label class="checkbox_label"><input type="checkbox" name="ip_private"/> Keep my IP private</label>
       <input name="file" type="file" id="file_input"/>
       <label for="file_input" id="file_label" draggable="true">
         <div>
@@ -43,6 +44,7 @@
 
 
     function upload() {
+        if(!confirm("Upload this file: '" + fileInput.files[0].name + "' ?")) return;
         drop_enable = false;
 
         statusL.innerHTML = 'Uploading...';
@@ -53,6 +55,8 @@
         var file = files[0];
 
         formData.append('file', file, file.name);
+        formData.append('ip_private', document.getElementsByName("ip_private")[0].checked);
+
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'upload.php', true);
         xhr.onload = function () {
@@ -88,8 +92,8 @@
             upload();
           }
         }
-
       });
+
       fileInput.addEventListener("change", function(evt) {
         upload();
       });
@@ -107,7 +111,7 @@
 
       function updateLog(){
         let xhr = new XMLHttpRequest();
-        xhr.open('GET', 'log.txt?' + Date.now(), true);
+        xhr.open('GET', 'log.php?' + Date.now(), true);
         xhr.onload = function () {
           if (xhr.status == 200) {
             log.innerHTML = xhr.response;

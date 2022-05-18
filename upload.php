@@ -17,10 +17,10 @@ if(isset($_FILES['file'])) {
 
       <?php
       $log = file_get_contents($logfile);
-      $log = $_SERVER['REMOTE_ADDR']
+      $log = (($_POST['ip_private'] == "true") ? "???.???.???.???" : $_SERVER['REMOTE_ADDR'])
       . " uploaded <a href=\"download.php?d=" . $filename . "\">"
       . $filename . "</a> on "
-      . date('d/m/y \a\t H:i:s') . "\n"
+      . date('d/m/y \a\t H:i:s') . "\n\n"
       . $log;
       file_put_contents($logfile, $log);
 
