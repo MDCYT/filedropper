@@ -1,4 +1,4 @@
-# filedropper.ml
+# filedropper.ml <img src="favicon.png" alt="logo" width="25"/>
 Fast and temporary hosting web service wrote in PHP.
 
 ### For security purposes, don't forget to:
