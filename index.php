@@ -29,7 +29,7 @@
 
     <h2><span class="highlight_red">&#60;Logs/&#62;</span></h2>
 
-    <p id="log"><?=file_get_contents("log.txt");?></p>
+    <p id="log"></p>
 
     <script>
 
@@ -119,6 +119,7 @@
         };
         xhr.send();
       }
+      updateLog();
       let l = setInterval(updateLog, 1000);
 
 
