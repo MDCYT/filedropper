@@ -13,6 +13,7 @@
     <form enctype="multipart/form-data" action="upload.php" method="post" id="form">
       <input type="hidden" name="MAX_FILE_SIZE" value="5000000000" />
       <label class="checkbox_label"><input type="checkbox" name="ip_private"/> Keep my IP private</label>
+      <label class="checkbox_label"><input type="checkbox" name="link_private"/> Keep my link private</label>
       <input name="file" type="file" id="file_input"/>
       <label for="file_input" id="file_label" draggable="true">
         <div>
@@ -56,6 +57,7 @@
 
         formData.append('file', file, file.name);
         formData.append('ip_private', document.getElementsByName("ip_private")[0].checked);
+        formData.append('link_private', document.getElementsByName("link_private")[0].checked);
 
         var xhr = new XMLHttpRequest();
         xhr.open('POST', 'upload.php', true);
@@ -151,7 +153,7 @@
     </script>
 
     <div id="footer" onclick="clearInterval(l);">
-      filedropper.ml / @fullfox 2022
+      <a href="https://github.com/fullfox/filedropper">filedropper.ml / @fullfox 2022</a>
     </div>
 
     </div>

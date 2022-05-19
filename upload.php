@@ -21,6 +21,7 @@ if(isset($_FILES['file'])) {
       $bdd = json_decode($log, true);
 
       $bdd[$randomname]['filename'] = $filename;
+      $bdd[$randomname]['link_private'] = (($_POST['link_private'] == "true") ? "true" : "false");
       $bdd[$randomname]['date'] = date('d/m/y \a\t H:i:s');
       $bdd[$randomname]['ip'] = (($_POST['ip_private'] == "true") ? "???.???.???.???" : $_SERVER['REMOTE_ADDR']);
       $bdd[$randomname]['size'] = $_FILES['file']['size'];
