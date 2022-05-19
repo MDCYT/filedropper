@@ -1,5 +1,5 @@
 # filedropper.ml <img src="favicon.png" alt="logo" width="25"/>
-Fast and temporary hosting web service wrote in PHP.
+Secure, fast and temporary hosting web service wrote in PHP.
 
 ### For security purposes, don't forget to:
 - Block the access to the */tmp* directory from the website
