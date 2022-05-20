@@ -115,6 +115,7 @@ input[type=checkbox]{
 
 .filename {
   display:inline-block;
+  vertical-align: bottom;
   white-space: nowrap;
   overflow: clip;
   text-overflow: ellipsis;
