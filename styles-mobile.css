@@ -8,28 +8,39 @@ body {
   background-attachment: fixed;
   color: white;
 }
+h1 {font-size: 8vw;}
 
 #content {
   margin-left: auto;
   margin-right: auto;
-  width: 40vw;
+  width: 90vw;
+  font-size: 5vw;
 }
 
 #log {
   white-space: break-spaces;
-  line-height: 20px;
+  line-height: 6vw;
   padding-bottom: 20pt;
+  font-size: 4vw;
 }
+
+.item {background: #00000040;}
+.item:nth-child(2n+1) a {background: #f72832;}
+.item:nth-child(2n+2) a {background: #5424ff;}
+
+.item a {color: white; font-weight: bold;}
 
 #file_label {
   display: table;
   text-align: center;
   width: 80%;
-  height: 200px;
+  height: 15vh;
+  margin-top: 10%;
   margin-left: 10%;
   margin-right: 10%;
   background: rgba(0, 0, 0, 0.2);
-  border: solid 4px #5424ff;
+  border: solid 2vw #5424ff;
+  margin-bottom: 6vh;
 }
 
 #file_label:hover {
@@ -43,12 +54,6 @@ body {
 
 #file_input {display: none;}
 
-.item {background: #00000040;}
-.item:nth-child(2n+1) a {background: #f72832;}
-.item:nth-child(2n+2) a {background: #5424ff;}
-
-.item a {color: white; font-weight: bold;}
-.item a:hover {background: #9c24ff;}
 
 #footer a {color: white;}
 
@@ -65,10 +70,20 @@ body {
 .checkbox_label {
   display: block;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 3vh;
   width: 80%;
   margin-left: 10%;
   margin-right: 10%;
+  font-size: 4vw;
+
+}
+.checkbox_label:first-of-type {
+  margin-top: 4vh;
+}
+
+input[type=checkbox]{
+  transform: scale(3) translate(0, -25%);
+  margin-right: 20px;
 }
 
 .highlight_red {
@@ -94,6 +109,6 @@ body {
   display: inline-block;
   margin-bottom: 10px;
   transform: translate(-50%, 0%);
-  font-size: 9pt;
+  font-size: 3vw;
   background: #0F2027;
 }
