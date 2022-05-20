@@ -97,3 +97,11 @@ body {
   font-size: 9pt;
   background: #0F2027;
 }
+
+.filename {
+  display:inline-block;
+  white-space: nowrap;
+  overflow: clip;
+  text-overflow: ellipsis;
+  max-width: 20ch;
+}
