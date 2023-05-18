@@ -1,93 +1,114 @@
-var form = document.getElementById('form');
-var fileInput = document.getElementById('file_input');
-var statusL = document.getElementById('statusL');
-var filename = document.getElementById('filename');
-var log = document.getElementById('log');
+let fileInput = document.getElementById('file-input');
+let fileLabel = document.getElementById('file-label');
+let uploadBox = document.getElementById('upload-box');
+let fileList = document.getElementById('file-list');
+
+let dynamicStatus = document.getElementById('dynamic-status'); //color blend
+let staticStatus = document.getElementById('static-status'); //no blend
+
+// Main
+let drop_enable = true;
+let files = [];
+let l = setInterval(updateLog, 1000);
+updateLog();
+
+fileLabel.addEventListener("drop", function(evt) {
+  evt.preventDefault();
+  if(drop_enable){
+    var dT = evt.dataTransfer;
+    var files = dT.files;
+    if (files && files.length) {
+      fileInput.files = files;
+      upload();
+    }
+  }
+});
+fileInput.addEventListener("change", function(evt) {
+  upload();
+});
+fileLabel.addEventListener("dragover", function(evt) {
+  evt.preventDefault();
+});
 
 
-let label = document.getElementById('file_label');
-
+// FUNCTIONS:
 
 function upload() {
-    if(!confirm("Upload this file: '" + fileInput.files[0].name + "' ?")) return;
     drop_enable = false;
+    let file = fileInput.files[0];
 
-    statusL.innerHTML = 'Uploading...';
-    filename.innerHTML = "\"" + fileInput.files[0].name + "\"";
+    if(!confirm("Upload this file: '" + escapeHTML(file.name) + "' ?")) return;
 
-    var files = fileInput.files;
-    var formData = new FormData();
-    var file = files[0];
-
-    formData.append('file', file, file.name);
-    formData.append('ip_private', document.getElementsByName("ip_private")[0].checked);
-    formData.append('link_private', document.getElementsByName("link_private")[0].checked);
+    let data = new FormData();
+    data.append('file', file, file.name);
+    data.append('ip_private', document.getElementsByName("ip_private")[0].checked);
+    data.append('link_private', document.getElementsByName("link_private")[0].checked);
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'upload.php', true);
     xhr.onload = function () {
+      dynamicStatus.innerHTML = '';
       if (xhr.status == 200) {
-        statusL.innerHTML = xhr.response;
-        label.setAttribute("for",""); //delink le label
+        staticStatus.innerHTML = `Successfully uploaded "${escapeHTML(file.name)}"<br>Here's your link:<br><a href="download.php?d=${xhr.response}" id="download-link" onclick="copylink(this, event)">Click me to copy</a><br><br><a href="">Upload another file</a>`;
+        fileLabel.setAttribute("for",""); //delink le label
         updateLog();
       } else {
-        statusL.innerHTML = 'Upload error. Try again.';
+        staticStatus.innerHTML = xhr.response ? xhr.response : 'Upload error. Try again.';
       }
     };
 
     xhr.upload.addEventListener("progress", function(evt) {
       let percent = parseInt(100 * evt.loaded / evt.total);
-      statusL.innerHTML = percent + "%";
-
-      let gradient = `linear-gradient(to right, rgba(84, 36, 255, 0.3) ${percent}%, rgba(0, 0, 0, 0.2) ${percent}%)`;
-      label.style.background = gradient;
+      dynamicStatus.innerHTML = `Uploading "${fileInput.files[0].name}"<br>${percent}%`;
+      let gradient = `linear-gradient(to right, var(--maincolor) ${percent}%, white ${percent}%)`;
+      let gradient_text = `linear-gradient(to right, white ${percent}%, var(--maincolor) ${percent}%)`;
+      uploadBox.style.backgroundImage = gradient;
+      dynamicStatus.style.backgroundImage = gradient_text;
 
     });
 
-    xhr.send(formData);
+    xhr.send(data);
   }
 
-  drop_enable = true;
-  label.addEventListener("drop", function(evt) {
-    evt.preventDefault();
-    if(drop_enable){
-      var dT = evt.dataTransfer;
-      var files = dT.files;
-      if (files && files.length) {
-        fileInput.files = files;
-        upload();
-      }
+
+
+function copylink(elem, evt){
+  copyToClipboard(elem.href);
+  elem.innerHTML = "Copied!";
+  elem.classList.add("copied");
+  evt.preventDefault();
+}
+
+function updateLog(){
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', 'log.php?' + Date.now(), true);
+  xhr.onload = function () {
+    if (xhr.status == 200) {
+      files = JSON.parse(xhr.response);
+      buildFilelist();
     }
-  });
+  };
+  xhr.send();
+}
 
-  fileInput.addEventListener("change", function(evt) {
-    upload();
-  });
+function buildFilelist(){
+  for (const file of files) {
 
-  label.addEventListener("dragover", function(evt) {
-    evt.preventDefault();
-  });
+    if(document.getElementById("item-"+file.uuid)) continue;
 
-  function copylink(elem, evt){
-    copyToClipboard(elem.href);
-    elem.innerHTML = "Copied!";
-    elem.classList.add("copied");
-    evt.preventDefault();
+    let item = document.createElement('a');
+    fileList.prepend(item);
+    item.outerHTML = `
+    <a href="download.php?d=${file.uuid}" class="tr" id="item-${file.uuid}" title="${file.filename}">
+      <div class="td">${file.filename}</div>
+      <div class="td">${formatSizeUnits(file.size)}</div>
+      <div class="td">${file.date}</div>
+      <div class="td">${file.ip}</div>
+    </a>
+    `;
+
   }
-
-  function updateLog(){
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'log.php?' + Date.now(), true);
-    xhr.onload = function () {
-      if (xhr.status == 200) {
-        log.innerHTML = xhr.response;
-      }
-    };
-    xhr.send();
-  }
-  updateLog();
-  let l = setInterval(updateLog, 1000);
-
+}
 
 //Snippet d'internet
 function copyToClipboard(textToCopy) {
@@ -112,4 +133,21 @@ function copyToClipboard(textToCopy) {
             textArea.remove();
         });
     }
+}
+
+function formatSizeUnits(bytes) {
+  if (bytes >= 1000000000) {
+    bytes = (bytes / 1000000000).toFixed(2) + ' GB';
+  } else if (bytes >= 1000000) {
+    bytes = (bytes / 1000000).toFixed(2) + ' MB';
+  } else if (bytes >= 1000) {
+    bytes = (bytes / 1000).toFixed(2) + ' KB';
+  } else {
+    bytes = bytes + ' B';
+  }
+  return bytes;
+}
+
+function escapeHTML(str) {
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }

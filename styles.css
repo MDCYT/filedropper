@@ -1,108 +1,83 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
-* {font-family: 'Roboto Mono', 'monospace'; }
-
-body {
-  background: linear-gradient(180deg, #2C5364, #203A43, #0F2027);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  color: white;
+:root {
+  --maincolor: #4545ff;
+  --importantcolor: red;
 }
 
-#content {
+a { color: initial; text-decoration: none;}
+body {
+  font-family: 'Roboto Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
   margin-left: auto;
   margin-right: auto;
-  width: 40vw;
 }
 
-#log {
-  white-space: break-spaces;
-  line-height: 20px;
-  padding-bottom: 20pt;
-}
+h1 {font-weight: 400;}
+input[type="checkbox"]{ vertical-align: middle; }
+label, #file-list {display: contents;}
 
-#file_label {
-  display: table;
-  text-align: center;
-  width: 80%;
-  height: 200px;
-  margin-left: 10%;
-  margin-right: 10%;
-  background: rgba(0, 0, 0, 0.2);
-  border: solid 4px #5424ff;
-}
+#file-input {display: none;}
 
-#file_label:hover {
-  border: solid 4px #9c24ff;
-}
+.checkbox {display: block;}
+.checkbox:hover {font-weight:bold; cursor: pointer;}
+.logo {vertical-align: middle;}
 
-#file_label div {
-  display: table-cell;
-  vertical-align: middle;
-}
-
-#file_input {display: none;}
-
-.item {background: #00000040;}
-.item:nth-child(2n+1) a {background: #f72832;}
-.item:nth-child(2n+2) a {background: #5424ff;}
-
-.item a {color: white; font-weight: bold;}
-.item a:hover {background: #9c24ff;}
-
-#footer a {color: white;}
-
-#file_label a {
-  background: #ff2424;
-  color: white;
-}
-
-#file_label a:hover, #file_label .copied {
-  background: #9c24ff;
-  color: white;
-}
-
-.checkbox_label {
-  display: block;
-  text-align: center;
-  margin-bottom: 10px;
-  width: 80%;
-  margin-left: 10%;
-  margin-right: 10%;
-}
-
-.highlight_red {
-  background-repeat: no-repeat;
-  background-size: 100% 0.8em;
-  background-position: 0 100%;
-  background-image: linear-gradient(0deg, #ff2424 50%, transparent 0);
-}
-
-.highlight_purple {
-  background-repeat: no-repeat;
-  background-size: 100% 0.8em;
-  background-position: 0 100%;
-  background-image: linear-gradient(0deg, #5424ff 50%, transparent 0);
-}
-
-.clickable {cursor: pointer; text-decoration: underline;}
-
-
-#footer {
-  position: relative;
-  left:50%;
-  display: inline-block;
-  margin-bottom: 10px;
-  transform: translate(-50%, 0%);
-  font-size: 9pt;
-  background: #0F2027;
-}
-
-.filename {
-  display:inline-block;
-  vertical-align: bottom;
+.table a {text-decoration: none; color: initial;}
+.tr { display: table-row; }
+.th,.td { display: table-cell; padding: 0 10px 0 10px; }
+.th {text-align: left; background: var(--maincolor); color: white; font-weight: bold;}
+.td:first-child {
   white-space: nowrap;
   overflow: clip;
   text-overflow: ellipsis;
-  max-width: 20ch;
+  max-width: 40ch;
+}
+
+.tr:hover {cursor: pointer; color: white; background: var(--maincolor);}
+
+#upload-box {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  width: 100%;
+  height: 120px;
+  background: white;
+  border: 3px solid var(--maincolor);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+#upload-box:hover {
+  color: white;
+  background: var(--maincolor);
+}
+
+#dynamic-status {
+  text-align: center;
+  background: var(--maincolor);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#upload-box:hover #dynamic-status {
+  background-color: white;
+}
+
+#static-status, #static-status a {
+  color: white;
+  text-align: center;
+}
+#download-link {background: var(--importantcolor);}
+#download-link:hover {font-weight: bold;}
+#static-status a:hover {text-decoration: underline;}
+
+.blink { animation: blinker 1s linear infinite; }
+@keyframes blinker {
+  0% {visibility: hidden;}
+  50% {visibility: hidden;}
+  100% {visibility: visible;}
 }
