@@ -58,6 +58,7 @@ label, #file-list {display: contents;}
 }
 
 #dynamic-status {
+  width: 100%;
   text-align: center;
   background: var(--maincolor);
   -webkit-background-clip: text;
