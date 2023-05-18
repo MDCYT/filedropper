@@ -13,7 +13,7 @@ function fileAlreadyExistError(){
 
 if(isset($_FILES['file'])) {
   $filename = htmlspecialchars(basename($_FILES['file']['name']));
-  $randomname = bin2hex(random_bytes(20));
+  $randomname = bin2hex(random_bytes(32));
   $uploadfile = $tmp . $randomname;
 
   if(file_exists($uploadfile) == false){
