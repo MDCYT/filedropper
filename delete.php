@@ -1,7 +1,7 @@
 <?php
 include 'vars.php';
 
-if(hash('sha256', $_GET["p"] . 'filedropper.ml') == $password){
+if(hash('sha256', $_GET["p"] . 'filedropper.eu') == $password){
   $files = glob($tmp . '*');
   foreach($files as $file){
     if(is_file($file)) {

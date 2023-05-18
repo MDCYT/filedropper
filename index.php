@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>File dropper</title>
+    <title>filedropper.eu</title>
     <link rel="icon" type="image/png" href="favicon.png" />
     <link rel="stylesheet" href="styles.css" media="screen and (min-device-width: 800px)">
     <link rel="stylesheet" href="styles.css" media="screen and (max-device-width: 800px)">
