@@ -3,6 +3,8 @@ if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
   die();
 }
 
+$info = 'Now in HTTPS !';
+
 $tmp = "tmp/";
 $logfile = "log.txt";
 

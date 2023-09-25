@@ -17,6 +17,8 @@ body {
 }
 
 h1 {font-weight: 400;}
+.info {background: yellow; font-weight: 100; margin-top: 0px;}
+
 input[type="checkbox"]{ vertical-align: middle; }
 label, #file-list {display: contents;}
 

@@ -1,3 +1,4 @@
+<?php include 'vars.php'; ?>
 <!DOCTYPE html>
 <html lang="fr" dir="ltr">
   <head>
@@ -9,6 +10,7 @@
   </head>
   <body>
     <h1>>filedropper.eu<span class="blink">_</span></h1>
+    <?php if($info != ''){ ?><h2 class="info"><?=$info ?></h2><?php } ?>
 
     <input type="hidden" name="MAX_FILE_SIZE" value="5000000000" />
     <label class="checkbox">🕵 Keep my IP private <input type="checkbox" name="ip_private"/></label>
