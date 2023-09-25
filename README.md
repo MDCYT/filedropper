@@ -8,6 +8,9 @@ If not, edit permission so the webserver owns the files.
 
 *Delete `check.php` once checked*
 
+Make sure to edit your `php.ini` conf file to increase the file size limit.
+Check https://www.php.net/manual/en/ini.core.php#ini.upload-max-filesize
+
 ### For security purposes, don't forget to:
 - Block the access to the */tmp* directory from the website
 - Block the access to the *log.txt* file from the website
