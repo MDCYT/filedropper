@@ -1,11 +1,8 @@
-# Example of .htaccess, if using Apache
-# pls configure the same restrictions if using another webserver
+RewriteEngine On
+RewriteRule ^d/([^/]+)?$ /download.php?d=$1 [L,QSA]
 
 RedirectMatch 403 \/tmp\/.*
 
-<Files "log.txt">
-  Require all denied
-</Files>
 <Files "vars.php">
   Require all denied
 </Files>
