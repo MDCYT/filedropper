@@ -1,0 +1,43 @@
+<?php
+if (basename(__FILE__) == basename($_SERVER["SCRIPT_FILENAME"])) {
+  die();
+}
+
+$name = 'Hosting files';
+$info = 'Now in HTTPS !';
+$url = "http://locahost/";
+// 500 MB, the size are in bytes
+$MAX_FILE_SIZE = 500 * 1024 * 1024;
+
+$tmp = "tmp/";
+
+// DB connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "files";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "CREATE TABLE IF NOT EXISTS files (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    uuid TEXT not null,
+    filename TEXT  not null,
+    link_private boolean DEFAULT False,
+    date datetime DEFAULT CURRENT_TIMESTAMP,
+    size INT,
+    expiration_date datetime
+)";
+
+if ($conn->query($sql) === TRUE) {
+  //echo "Table files created successfully";
+} else {
+  //echo "Error creating table: " . $conn->error;
+}
+?>
