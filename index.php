@@ -42,7 +42,7 @@
     </div>
 
     <br><br>
-    <a href="https://github.com/fullfox/filedropper"><p><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="28px" class="logo">fullfox</p></a>
+    <a href="https://github.com/mdcyt/files.mdcdev.me"><p><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" width="28px" class="logo">mdcyt</p></a>
 	  
 	<div class="footer-links">
       <a href="https://files.mdcdev.me/support/kb/faq.php?id=3">Terms of Service</a> - 
