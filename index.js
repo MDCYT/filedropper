@@ -9,7 +9,7 @@ let staticStatus = document.getElementById('static-status'); //no blend
 // Main
 let drop_enable = true;
 let files = [];
-let l = setInterval(updateLog, 1000);
+let l = setInterval(updateLog, 10000);
 updateLog();
 
 fileLabel.addEventListener("drop", function(evt) {
@@ -34,26 +34,36 @@ fileLabel.addEventListener("dragover", function(evt) {
 // FUNCTIONS:
 
 function upload() {
+  staticStatus.innerHTML = '';
+  
     drop_enable = false;
     let file = fileInput.files[0];
+
+    // Check file size
+    if (file.size > (500 * 1024 * 1024)) {
+      staticStatus.innerHTML = 'File too large. Max 500MB.';
+      return;
+    }
 
     if(!confirm("Upload this file: '" + escapeHTML(file.name) + "' ?")) return;
 
     let data = new FormData();
     data.append('file', file, file.name);
-    data.append('ip_private', document.getElementsByName("ip_private")[0].checked);
     data.append('link_private', document.getElementsByName("link_private")[0].checked);
+    data.append('time_expiration', document.getElementsByName("time")[0].value);
 
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'upload.php', true);
     xhr.onload = function () {
       dynamicStatus.innerHTML = '';
       if (xhr.status == 200) {
-        staticStatus.innerHTML = `Successfully uploaded "${escapeHTML(file.name)}"<br>Here's your link:<br><a href="download.php?d=${xhr.response}" id="download-link" onclick="copylink(this, event)">Click me to copy</a><br><br><a href="">Upload another file</a>`;
+        let response = JSON.parse(xhr.response);
+        staticStatus.innerHTML = `Successfully uploaded "${escapeHTML(file.name)}"<br>Here's your link:<br><a href="/d/${response.uuid}" id="download-link" onclick="copylink(this, event)">Click me to copy</a><br><br><a href="">Upload another file</a>`;
         fileLabel.setAttribute("for",""); //delink le label
         updateLog();
       } else {
-        staticStatus.innerHTML = xhr.response ? xhr.response : 'Upload error. Try again.';
+        let response = JSON.parse(xhr.response);
+        staticStatus.innerHTML = `${response.error}`;
       }
     };
 
@@ -99,11 +109,10 @@ function buildFilelist(){
     let item = document.createElement('a');
     fileList.prepend(item);
     item.outerHTML = `
-    <a href="download.php?d=${file.uuid}" class="tr" id="item-${file.uuid}" title="${file.filename}">
+    <a href="/d/${file.uuid}" class="tr" id="item-${file.uuid}" title="${file.filename}">
       <div class="td">${file.filename}</div>
       <div class="td">${formatSizeUnits(file.size)}</div>
       <div class="td">${file.date}</div>
-      <div class="td">${file.ip}</div>
     </a>
     `;
 
@@ -136,12 +145,12 @@ function copyToClipboard(textToCopy) {
 }
 
 function formatSizeUnits(bytes) {
-  if (bytes >= 1000000000) {
-    bytes = (bytes / 1000000000).toFixed(2) + ' GB';
-  } else if (bytes >= 1000000) {
-    bytes = (bytes / 1000000).toFixed(2) + ' MB';
-  } else if (bytes >= 1000) {
-    bytes = (bytes / 1000).toFixed(2) + ' KB';
+  if (bytes >= 1024 * 1024 * 1024) {
+    bytes = (bytes / (1024 * 1024 * 1024)).toFixed(2) + ' GB';
+  } else if (bytes >= 1024 * 1024) {
+    bytes = (bytes / (1024 * 1024)).toFixed(2) + ' MB';
+  } else if (bytes >= 1024) {
+    bytes = (bytes / 1024).toFixed(2) + ' KB';
   } else {
     bytes = bytes + ' B';
   }
