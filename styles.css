@@ -26,6 +26,11 @@ label, #file-list {display: contents;}
 
 .checkbox {display: block;}
 .checkbox:hover {font-weight:bold; cursor: pointer;}
+
+select {padding: 5px; margin: 5px; border: 1px solid; border-radius: 5px; vertical-align: middle;}
+
+.time {display:block; margin-top: 5px;}
+
 .logo {vertical-align: middle;}
 
 .table a {text-decoration: none; color: initial;}
@@ -71,9 +76,9 @@ label, #file-list {display: contents;}
 }
 
 #static-status, #static-status a {
-  color: white;
   text-align: center;
 }
+
 #download-link {background: var(--importantcolor);}
 #download-link:hover {font-weight: bold;}
 #static-status a:hover {text-decoration: underline;}
