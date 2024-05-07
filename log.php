@@ -1,19 +1,22 @@
 <?php
 include 'vars.php';
-header("Content-Type: text/plain");
-$log = file_get_contents($logfile);
 
-$bdd = json_decode($log, true);
+header('Content-Type: application/json');
+
+$sql = "SELECT * FROM files WHERE link_private = false ORDER BY date ASC";
+
+$result = $conn->query($sql);
+
 $list = [];
-foreach ($bdd as $randomname => $elem) {
-  if($elem['link_private'] == 'false'){
-  $list[] = array(
-    "uuid"=>$randomname,
-    "filename"=>$elem['filename'],
-    "size"=>$elem['size'],
-    "date"=>$elem['date'],
-    "ip"=>$elem['ip']);
+if ($result->num_rows > 0) {
+  while($row = $result->fetch_assoc()) {
+    $list[] = array(
+      "uuid"=>$row['uuid'],
+      "filename"=>$row['filename'],
+      "size"=>$row['size'],
+      "date"=>$row['date']);
   }
 }
+
 echo json_encode($list);
 ?>
